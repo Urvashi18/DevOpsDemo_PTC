@@ -18,7 +18,10 @@ Mention host name in hosts file, can configure any number of hosts
 Mention port numbers where tomcat instances will run in conf.yml
 
 Run the script with following command :
+#####################
 ansible-playbook --user ubuntu --ask-pass --ask-become-pass -i hosts site.yml
+######################
+
 and
 Provide ssh passsword and the sudo password
 After the script runs successfully.
