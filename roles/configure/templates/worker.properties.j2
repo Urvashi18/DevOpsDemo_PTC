@@ -1,0 +1,18 @@
+worker.list=loadbalancer
+
+{% for item in tomcat_ports %}
+# Set properties for worker{{ loop.index }}
+worker.worker{{ loop.index }}.type=ajp13
+worker.worker{{ loop.index }}.host=127.0.0.1
+worker.worker{{ loop.index }}.port={{ item }}
+worker.worker{{ loop.index }}..connection_pool_size=200
+worker.worker{{ loop.index }}.connection_pool_timeout=600 
+worker.worker{{ loop.index }}.socket_keepalive=1 
+
+{% endfor %}
+
+worker.loadbalancer.type=lb
+worker.loadbalancer.balance_workers={% for item in tomcat_ports %}
+worker{{ loop.index }}
+{% if loop.first %},{% endif %}
+{% endfor %}

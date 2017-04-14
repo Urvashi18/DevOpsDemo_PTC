@@ -1,0 +1,53 @@
+- name : Configuring two tomcat instances
+  template:
+    src: templates/server.xml.j2
+    dest: /etc/tomcat7/server.xml
+    mode: 0644
+  become: yes
+  become_user: root
+  
+- name: Configuring worker.properties
+  template:
+      src: templates/worker.properties.j2
+      dest: /etc/libapache2-mod-jk/workers.properties
+      mode: 0644
+  become: yes
+  become_user: root
+
+- name: Configuring jk.conf
+  template:
+      src: templates/jk.conf.j2
+      dest: /etc/apache2/mods-enabled/jk.conf
+      mode: 0644
+  become: yes
+  become_user: root
+
+- name: Configuring 000-default.conf
+  template:
+      src: templates/000-default.conf.j2
+      dest: /etc/apache2/sites-available/000-default.conf
+      mode: 0644
+  become: yes
+  become_user: root
+
+- name: install proxy
+  command: a2enmod proxy
+  become: yes
+  become_user: root
+
+- name: install http-proxy
+  command: a2enmod proxy_http
+  become: yes
+  become_user: root
+
+- service:
+    name: tomcat7
+    state: restarted
+  become: yes
+  become_user: root
+
+- service:
+    name: apache2
+    state: restarted
+  become: yes
+  become_user: root

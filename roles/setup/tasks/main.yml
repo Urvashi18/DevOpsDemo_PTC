@@ -1,0 +1,29 @@
+- name: Download apache2
+  apt: 
+    name: apache2
+    update_cache: yes
+    state: latest
+  become: yes
+  become_user: root
+
+- name: Download tomcat7 
+  apt: 
+    name: tomcat7
+    update_cache: yes
+    state: latest
+  become: yes 
+  become_user: root
+
+- name: Download mod-jk
+  apt: 
+    name: libapache2-mod-jk 
+    state: latest
+  become: yes
+  become_user: root
+
+- name: Download mysql-server
+  apt: 
+    name: mysql-server 
+    state: latest
+  become: yes
+  become_user: root
